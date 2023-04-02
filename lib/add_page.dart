@@ -41,6 +41,26 @@ class AddPage extends StatelessWidget {
               ),
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            child: TextField(
+              controller: province,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Enter Province',
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            child: TextField(
+              controller: phoneNumber,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Enter PhoneNumber',
+              ),
+            ),
+          ),
           ElevatedButton(
               onPressed: () {
                 todo.personalAdd(Personal(

@@ -17,7 +17,8 @@ class EditPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final todo = Provider.of<Todo>(context);
-    ctrl.text = context.read<Todo>().tasks[index];
+    ctrl.text = context.read<Todo>().personalList[index] as String;
+
     return Scaffold(
       appBar: AppBar(),
       body: Column(
@@ -27,10 +28,17 @@ class EditPage extends StatelessWidget {
           ),
           ElevatedButton(
               onPressed: () {
-                context.read<Todo>().personalEdit(index, ctrl.text as Personal);
+                todo.personalEdit(
+                    index,
+                    Personal(
+                        name: name.text,
+                        lastName: lastName.text,
+                        age: age.text,
+                        phoneNumber: phoneNumber.text,
+                        province: province.text));
                 Navigator.pop(context);
               },
-              child: const Text("Save")),
+              child: const Text("Edit")),
           ElevatedButton(
               onPressed: () {
                 context.read<Todo>().personalDelete(index);
