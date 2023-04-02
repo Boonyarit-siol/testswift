@@ -5,6 +5,11 @@ import 'main.dart';
 import 'person.dart';
 
 class AddPage extends StatelessWidget {
+  final name = TextEditingController();
+  final lastName = TextEditingController();
+  final age = TextEditingController();
+  final phoneNumber = TextEditingController();
+  final province = TextEditingController();
   final ctrl = TextEditingController();
   AddPage({Key? key}) : super(key: key);
 
@@ -16,17 +21,34 @@ class AddPage extends StatelessWidget {
       appBar: AppBar(),
       body: Column(
         children: [
-          TextField(
-            controller: ctrl,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            child: TextField(
+              controller: name,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Enter Name',
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            child: TextField(
+              controller: lastName,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Enter lastName',
+              ),
+            ),
           ),
           ElevatedButton(
               onPressed: () {
                 todo.personalAdd(Personal(
-                    name: ctrl.text,
-                    lastName: ctrl.text,
-                    age: ctrl.text,
-                    phoneNumber: ctrl.text,
-                    province: ctrl.text));
+                    name: name.text,
+                    lastName: lastName.text,
+                    age: age.text,
+                    phoneNumber: phoneNumber.text,
+                    province: province.text));
                 Navigator.pop(context);
               },
               child: const Text("Add Member")),

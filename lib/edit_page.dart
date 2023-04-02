@@ -5,7 +5,13 @@ import 'state.dart';
 
 class EditPage extends StatelessWidget {
   final int index;
+  final name = TextEditingController();
+  final lastName = TextEditingController();
+  final age = TextEditingController();
+  final phoneNumber = TextEditingController();
+  final province = TextEditingController();
   final ctrl = TextEditingController();
+
   EditPage(this.index, {Key? key}) : super(key: key);
 
   @override
