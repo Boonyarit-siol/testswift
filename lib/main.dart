@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:testswfit1/add_page.dart';
-import 'add_page.dart';
 import 'package:provider/provider.dart';
+
 import 'edit_page.dart';
 import 'state.dart';
 import 'person.dart';
@@ -9,7 +9,7 @@ import 'person.dart';
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   static const String _title = 'Flutter Code Sample';
 
@@ -26,14 +26,12 @@ class MyApp extends StatelessWidget {
 }
 
 class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({super.key});
+  const MyStatefulWidget({Key? key}) : super(key: key);
 
   @override
   State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
 }
 
-/// [AnimationController]s can be created with `vsync: this` because of
-/// [TickerProviderStateMixin].
 class _MyStatefulWidgetState extends State<MyStatefulWidget>
     with TickerProviderStateMixin {
   late TabController _tabController;
@@ -47,6 +45,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
   @override
   Widget build(BuildContext context) {
     final todo = Provider.of<Todo>(context);
+    List<Personal> personalListFilter = List<Personal>.from(todo.personalList);
+    personalListFilter.sort((a, b) => a.province.compareTo(b.province));
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('TabBar Widget'),
@@ -69,23 +70,48 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
         controller: _tabController,
         children: <Widget>[
           ListView.builder(
-            itemCount: todo.personalList.length,
+            itemCount: personalListFilter.length,
             itemBuilder: (BuildContext context, int index) {
-              final Personal personal = todo.personalList[index];
-              child:
-              ListTile(
-                  leading: CircleAvatar(child: Text(personal.name[0])),
-                  title: Text('${personal.name} ${personal.lastName}'),
-                  subtitle: Text(
-                      'Age: ${personal.age}, Phone: ${personal.phoneNumber} Province: ${personal.province}'),
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => EditPage(index)));
-                  });
+              final Personal personal = personalListFilter[index];
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (index == 0)
+                    Container(
+                      height: 30,
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      color: Colors.grey,
+                      alignment: Alignment.centerLeft,
+                      child: Text(personal.province.toUpperCase()),
+                    )
+                  else if (personalListFilter[index].province.toUpperCase() !=
+                      personalListFilter[index - 1].province.toUpperCase())
+                    Container(
+                      height: 30,
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      color: Colors.grey,
+                      alignment: Alignment.centerLeft,
+                      child: Text(personal.province.toUpperCase()),
+                    ),
+                  ListTile(
+                    leading: CircleAvatar(
+                        child: Text(personal.name[0].toUpperCase())),
+                    title: Text('${personal.name} ${personal.lastName}'),
+                    subtitle: Text(
+                        'Age: ${personal.age}, Phone: ${personal.phoneNumber} Province: ${personal.province}'),
+                  ),
+                ],
+              );
             },
           ),
-          Center(child: Text('Tab 2')),
-          Center(child: Text('Tab 3')),
+          const Center(
+            child: Text('Info Tab'),
+          ),
+          const Center(
+            child: Text('ABC Tab'),
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
