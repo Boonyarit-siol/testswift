@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:testswfit1/person.dart';
 import 'state.dart';
 
 class EditPage extends StatelessWidget {
@@ -9,6 +10,7 @@ class EditPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final todo = Provider.of<Todo>(context);
     ctrl.text = context.read<Todo>().tasks[index];
     return Scaffold(
       appBar: AppBar(),
@@ -19,13 +21,13 @@ class EditPage extends StatelessWidget {
           ),
           ElevatedButton(
               onPressed: () {
-                context.read<Todo>().edit(index, ctrl.text);
+                context.read<Todo>().personalEdit(index, ctrl.text as Personal);
                 Navigator.pop(context);
               },
               child: const Text("Save")),
           ElevatedButton(
               onPressed: () {
-                context.read<Todo>().delete(index);
+                context.read<Todo>().personalDelete(index);
                 Navigator.pop(context);
               },
               child: const Text("Delete")),

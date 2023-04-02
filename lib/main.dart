@@ -3,6 +3,8 @@ import 'package:testswfit1/add_page.dart';
 import 'add_page.dart';
 import 'package:provider/provider.dart';
 import 'edit_page.dart';
+import 'state.dart';
+import 'person.dart';
 
 void main() => runApp(const MyApp());
 
@@ -13,9 +15,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: _title,
-      home: MyStatefulWidget(),
+    return ChangeNotifierProvider(
+      create: (BuildContext context) => Todo(),
+      child: const MaterialApp(
+        title: _title,
+        home: MyStatefulWidget(),
+      ),
     );
   }
 }
@@ -39,28 +44,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
     _tabController = TabController(length: 3, vsync: this);
   }
 
-  List<Personal> personalList = [
-    Personal(
-        name: "A",
-        lastName: "AA",
-        age: "20",
-        phoneNumber: "0999999",
-        province: "SG"),
-    Personal(
-        name: "B",
-        lastName: "BB",
-        age: "20",
-        phoneNumber: "0999999",
-        province: "ST"),
-    Personal(
-        name: "C",
-        lastName: "CC",
-        age: "20",
-        phoneNumber: "0999999",
-        province: "SK"),
-  ];
   @override
   Widget build(BuildContext context) {
+    final todo = Provider.of<Todo>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('TabBar Widget'),
@@ -83,9 +69,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
         controller: _tabController,
         children: <Widget>[
           ListView.builder(
-            itemCount: personalList.length,
+            itemCount: todo.personalList.length,
             itemBuilder: (BuildContext context, int index) {
-              final Personal personal = personalList[index];
+              final Personal personal = todo.personalList[index];
               return ListTile(
                 leading: CircleAvatar(child: Text(personal.name[0])),
                 title: Text('${personal.name} ${personal.lastName}'),
@@ -106,21 +92,4 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
       ),
     );
   }
-}
-
-class Personal {
-  String name;
-  String lastName;
-  String age;
-  String phoneNumber;
-
-  String province;
-
-  Personal({
-    required this.name,
-    required this.lastName,
-    required this.age,
-    required this.phoneNumber,
-    required this.province,
-  });
 }

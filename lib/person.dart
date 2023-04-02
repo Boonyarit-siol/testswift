@@ -1,13 +1,16 @@
-class Person {
-  final String id;
-  final String firstName;
-  final String lastName;
-  final String province;
+class Personal {
+  String name;
+  String lastName;
+  String age;
+  String phoneNumber;
 
-  Person({
-    required this.id,
-    required this.firstName,
+  String province;
+
+  Personal({
+    required this.name,
     required this.lastName,
+    required this.age,
+    required this.phoneNumber,
     required this.province,
   });
 }
