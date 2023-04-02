@@ -72,12 +72,16 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
             itemCount: todo.personalList.length,
             itemBuilder: (BuildContext context, int index) {
               final Personal personal = todo.personalList[index];
-              return ListTile(
-                leading: CircleAvatar(child: Text(personal.name[0])),
-                title: Text('${personal.name} ${personal.lastName}'),
-                subtitle: Text(
-                    'Age: ${personal.age}, Phone: ${personal.phoneNumber} Province: ${personal.province}'),
-              );
+              child:
+              ListTile(
+                  leading: CircleAvatar(child: Text(personal.name[0])),
+                  title: Text('${personal.name} ${personal.lastName}'),
+                  subtitle: Text(
+                      'Age: ${personal.age}, Phone: ${personal.phoneNumber} Province: ${personal.province}'),
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => EditPage(index)));
+                  });
             },
           ),
           Center(child: Text('Tab 2')),
